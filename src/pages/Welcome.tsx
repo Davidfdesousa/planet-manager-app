@@ -18,7 +18,6 @@ import fonts from "../styles/fonts";
 
 export function Welcome() {
 
-
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.wrapper}>
