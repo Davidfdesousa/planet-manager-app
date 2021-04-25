@@ -13,6 +13,7 @@ import colors from '../styles/colors';
 import fonts from '../styles/fonts';
 
 import { Button } from '../components/Button';
+import { useNavigation } from '@react-navigation/core';
 
 export function UserIdentification () {
 
@@ -32,6 +33,11 @@ export function UserIdentification () {
   function handleInputChange (value:string) {
     setIsFilled(!!value);
     setName(value);
+  }
+  const navigation = useNavigation();
+
+  function handleSubmit (){
+    navigation.navigate("Confirmation");
   }
 
   return (
@@ -58,7 +64,7 @@ export function UserIdentification () {
             />
 
             <View style={styles.wrapperButton}>
-              <Button title={"Confirmar"} />
+              <Button title={"Confirmar"} onPress={handleSubmit} />
             </View>
           </View>
         </View>
