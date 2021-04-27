@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   SafeAreaView,
   View,
@@ -9,11 +9,36 @@ import {
 } from 'react-native';
 import { EnviromentButton } from '../components/EnviromentButton';
 import { Header } from '../components/Header';
+import api from '../sevices/api';
 
 import colors from '../styles/colors';
 import fonts from '../styles/fonts';
 
+interface EnviromentProps {
+  key: string;
+  title: string;
+}
+
 export function PlantSelect() {
+
+  const [ enviroments, setEnviroments ] = useState<EnviromentProps[]>([]);
+
+  useEffect(() => {
+    async function fetchEnviroment(){
+      const { data } = await api.get('plants_environments');
+
+      setEnviroments([
+        {
+          key: 'all',
+          title: 'Todos'
+        },
+        ...data
+      ]);
+    }
+
+    fetchEnviroment();
+  })
+
   return (
     <View style={styles.container}>
       <Header />
@@ -34,11 +59,10 @@ export function PlantSelect() {
           horizontal
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.enviromentList}
-          data={[1, 2, 3, 4, 5]}
+          data={enviroments}
           renderItem={({ item }) => (
             <EnviromentButton
-              title={'Cozinha'}
-              active
+              title={item.title}
             />
           )}
         />
